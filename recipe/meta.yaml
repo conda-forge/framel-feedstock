@@ -12,7 +12,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -23,11 +23,12 @@ requirements:
 
 outputs:
   - name: libframel
+    build:
+      run_exports:
+        - {{ pin_subpackage("libframel", max_pin="x") }}
     requirements:
       build:
         - {{ compiler('c') }}
-      run_exports:
-        - {{ pin_subpackage("libframel", max_pin="x") }}
       run_constained:
         - libframe >=9999
     files:
