@@ -10,6 +10,9 @@ docker_image:
 - condaforge/linux-anvil-comp7
 numpy:
 - '1.14'
+- '1.14'
+- '1.14'
+- '1.18'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -17,3 +20,8 @@ pin_run_as_build:
 python:
 - 3.6.* *_cpython
 - 3.7.* *_cpython
+- 3.8.* *_cpython
+- 3.6.* *_73_pypy
+zip_keys:
+- - numpy
+  - python
