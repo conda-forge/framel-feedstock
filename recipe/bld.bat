@@ -4,7 +4,8 @@ cd _build
 :: configure
 cmake "%SRC_DIR%" ^
     -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo ^
-    -DCMAKE_INSTALL_PREFIX:PATH="%PREFIX%" ^
+    -DCMAKE_C_COMPILER=gcc ^
+    -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
     -DENABLE_C:BOOL=yes ^
     -DENABLE_MATLAB:BOOL=no ^
     -DENABLE_PYTHON:BOOL=no
