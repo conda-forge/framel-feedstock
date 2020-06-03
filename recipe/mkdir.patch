@@ -1,0 +1,28 @@
+diff --git a/src/FrIO.c b/src/FrIO.c
+index 186cddc..3ab3749 100644
+--- a/src/FrIO.c
++++ b/src/FrIO.c
+@@ -11,7 +11,11 @@
+ #include <fcntl.h>
+ #include <stdlib.h>
+ #include <stdio.h>
++#ifdef _WIN32
++#include <io.h>
++#else
+ #include <unistd.h>
++#endif
+ #include <string.h>
+ #include <dirent.h>
+ #include <sys/stat.h>
+@@ -34,7 +38,11 @@ int FrIOmkdir(char *dirName)
+     closedir(dirp);
+     return(0);}
+
++#if (defined(_WIN32) || defined(__WIN32__))
++  err = _mkdir(dirName);
++#else
+   err = mkdir(dirName, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
++#endif
+
+   return(err);}
+

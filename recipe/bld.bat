@@ -3,6 +3,7 @@ cd _build
 
 :: configure
 cmake "%SRC_DIR%" ^
+    -G "Ninja" ^
     -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo ^
     -DCMAKE_C_COMPILER=gcc ^
     -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
