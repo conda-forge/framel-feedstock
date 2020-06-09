@@ -1,0 +1,16 @@
+diff --git a/src/FrIO.c b/src/FrIO.c
+index 186cddc..b223163 100644
+--- a/src/FrIO.c
++++ b/src/FrIO.c
+@@ -34,7 +34,11 @@ int FrIOmkdir(char *dirName)
+     closedir(dirp);
+     return(0);}
+
++#if (defined(_WIN32) || defined(__WIN32__))
++  err = mkdir(dirName);
++#else
+   err = mkdir(dirName, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
++#endif
+
+   return(err);}
+

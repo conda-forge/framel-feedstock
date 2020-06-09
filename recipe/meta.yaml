@@ -8,18 +8,26 @@ package:
 source:
   url: http://software.igwn.org/sources/source/{{ name }}-{{ version }}.tar.xz
   sha256: f6a2ec7db8a3cee65f8a483fe2924d28e073ef8c82357ba9e080c6a61000f830
+  patches:
+    # mkdir on mingw only takes one argument
+    - mkdir.patch  # [win]
+    # use correct extension on windows
+    - windows-pyd.patch  # [win]
+    # fix type casts in framel.c
+    - framel-sizeof-position.patch
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 1
-  skip: true  # [win]
+  number: 2
 
 requirements:
   build:
-    - {{ compiler('c') }}
+    - {{ compiler('c') }}  # [not win]
+    - {{ compiler('m2w64_c') }}  # [win]
     - cmake
-    - make  # [unix]
+    - make  # [not win]
+    - ninja  # [win]
 
 outputs:
   - name: libframel
@@ -28,18 +36,23 @@ outputs:
         - {{ pin_subpackage("libframel", max_pin="x") }}
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler('c') }}  # [not win]
+        - {{ compiler('m2w64_c') }}  # [win]
       run_constained:
         - libframe >=9999
     files:
-      - include/
-      - lib/libframel.*
-      - lib/pkgconfig/framel.pc
+      - include/  # [not win]
+      - lib/libframel.*  # [not win]
+      - lib/pkgconfig/framel.pc  # [not win]
+      - Library/include/  # [win]
+      - Library/bin/libframel.dll  # [win]
+      - Library/lib/libframel.*  # [win]
+      - Library/lib/pkgconfig/framel.pc  # [win]
     test:
       requires:
-        - pkg-config
+        - pkg-config  # [not win]
       commands:
-        - test "$(pkg-config --print-errors --modversion framel)" == "${PKG_VERSION}"  # [unix]
+        - test "$(pkg-config --print-errors --modversion framel)" == "${PKG_VERSION}"  # [not win]
     about:
       home: http://lappweb.in2p3.fr/virgo/FrameL/
       license: LGPL-2.1-or-later
@@ -57,7 +70,8 @@ outputs:
   - name: framel
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler('c') }}  # [not win]
+        - {{ compiler('m2w64_c') }}  # [win]
       host:
         - {{ pin_subpackage("libframel", exact=True) }}
       run:
@@ -65,8 +79,10 @@ outputs:
       run_constained:
         - libframe >=9999
     files:
-      - bin/
-      - share/doc/
+      - bin/  # [not win]
+      - share/doc/  # [not win]
+      - Library/bin/Fr*  # [win]
+      - Library/share/doc/  # [win]
     test:
       source_files:
         - data/test.gwf
@@ -92,17 +108,21 @@ outputs:
         This package provides the FrameL command line utilities.
 
   - name: python-framel
-    script: install-python.sh
+    script: install-python.sh  # [not win]
+    script: install-python.bat  # [win]
     build:
       ignore_run_exports:
         - python  # [osx]
     requirements:
       build:
-        - {{ compiler('c') }}
+        - {{ compiler('c') }}  # [not win]
+        - {{ compiler('m2w64_c') }}  # [win]
         - cmake >=3.16.0
-        - make  # [unix]
+        - make  # [not win]
+        - ninja  # [win]
       host:
         - {{ pin_subpackage('libframel', exact=True) }}
+        - libpython  # [win]
         - numpy
         - python
       run:
