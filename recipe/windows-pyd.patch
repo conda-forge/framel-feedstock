@@ -1,0 +1,16 @@
+diff --git a/Python/CMakeLists.txt b/Python/CMakeLists.txt
+index 1af4122..6dc9b42 100644
+--- a/Python/CMakeLists.txt
++++ b/Python/CMakeLists.txt
+@@ -45,6 +45,11 @@ print(numpy.get_include(), end=';')
+         target_link_libraries(PyFr3 ${Python3_LIBRARIES})
+     endif()
+
++    # set extension for windows
++    if (WIN32)
++        set_target_properties(PyFr3 PROPERTIES SUFFIX ".pyd")
++    endif()
++
+     # make sure and build the C library first
+     if (NOT DEFINED ENABLE_C OR ENABLE_C)
+         add_dependencies(PyFr3 framel)
