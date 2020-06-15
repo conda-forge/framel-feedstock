@@ -1,5 +1,5 @@
 {% set name = "framel" %}
-{% set version = "8.39.2" %}
+{% set version = "8.40.1" %}
 
 package:
   name: {{ name|lower }}-split
@@ -7,19 +7,15 @@ package:
 
 source:
   url: http://software.igwn.org/sources/source/{{ name }}-{{ version }}.tar.xz
-  sha256: f6a2ec7db8a3cee65f8a483fe2924d28e073ef8c82357ba9e080c6a61000f830
+  sha256: ea4afcdf839f8eb49edc2d3190b5aebb08871146e426b644887f7efbae30a6b9
   patches:
     # mkdir on mingw only takes one argument
     - mkdir.patch  # [win]
-    # use correct extension on windows
-    - windows-pyd.patch  # [win]
-    # fix type casts in framel.c
-    - framel-sizeof-position.patch
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 0
 
 requirements:
   build:
@@ -135,7 +131,17 @@ outputs:
       imports:
         - framel
       commands:
-        - python -c "from pathlib import Path; import framel; print(framel.frgetvect1d(str(Path('data') / 'test.gwf'), 'D1'))"
+        - >
+          python -c
+          "from pathlib import Path;
+          from numpy.testing import assert_array_equal;
+          import framel;
+          indata = framel.frgetvect1d(str(Path('data') / 'test.gwf'), 'D1');
+          framel.frputvect('test2.gwf', [{'name': 'A1:TEST', 'data': indata[0], 'start': indata[1], 'dx': indata[3], 'x_unit': indata[4], 'y_unit': indata[5]}]);
+          indata2 = framel.frgetvect1d('test2.gwf', 'A1:TEST');
+          assert_array_equal(indata[0], indata2[0], 'read-write data mismatch');
+          assert indata[1:] == indata2[1:], 'read-write metadata mismatch';
+          "
     about:
       home: http://lappweb.in2p3.fr/virgo/FrameL/
       license: LGPL-2.1-or-later
