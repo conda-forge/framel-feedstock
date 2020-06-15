@@ -11,10 +11,6 @@ source:
   patches:
     # mkdir on mingw only takes one argument
     - mkdir.patch  # [win]
-    # use correct extension on windows
-    - windows-pyd.patch  # [win]
-    # fix type casts in framel.c
-    - framel-sizeof-position.patch
 
 build:
   error_overdepending: true
