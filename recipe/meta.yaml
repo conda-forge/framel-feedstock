@@ -131,7 +131,17 @@ outputs:
       imports:
         - framel
       commands:
-        - python -c "from pathlib import Path; import framel; print(framel.frgetvect1d(str(Path('data') / 'test.gwf'), 'D1'))"
+        - >
+          python -c
+          "from pathlib import Path;
+          from numpy.testing import assert_array_equal;
+          import framel;
+          indata = framel.frgetvect1d(str(Path('data') / 'test.gwf'), 'D1');
+          framel.frputvect('test2.gwf', [{'name': 'A1:TEST', 'data': indata[0], 'start': indata[1], 'dx': indata[3], 'x_unit': indata[4], 'y_unit': indata[5]}]);
+          indata2 = framel.frgetvect1d('test2.gwf', 'A1:TEST');
+          assert_array_equal(indata[0], indata2[0], 'read-write data mismatch');
+          assert indata[1:] == indata2[1:], 'read-write metadata mismatch';
+          "
     about:
       home: http://lappweb.in2p3.fr/virgo/FrameL/
       license: LGPL-2.1-or-later
