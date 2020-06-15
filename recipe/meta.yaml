@@ -1,5 +1,5 @@
 {% set name = "framel" %}
-{% set version = "8.39.2" %}
+{% set version = "8.40.1" %}
 
 package:
   name: {{ name|lower }}-split
@@ -7,7 +7,7 @@ package:
 
 source:
   url: http://software.igwn.org/sources/source/{{ name }}-{{ version }}.tar.xz
-  sha256: f6a2ec7db8a3cee65f8a483fe2924d28e073ef8c82357ba9e080c6a61000f830
+  sha256: ea4afcdf839f8eb49edc2d3190b5aebb08871146e426b644887f7efbae30a6b9
   patches:
     # mkdir on mingw only takes one argument
     - mkdir.patch  # [win]
@@ -19,7 +19,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 0
 
 requirements:
   build:
