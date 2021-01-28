@@ -7,13 +7,6 @@
     replace('r', '.', 1)|
     replace('p', '.', 1)
  %}
-#{% set minor = version|split('r')[1]|split('p')[0] %}
-#{% if "p" in version %}
-#{% set patch = version|split('p')[1] %}
-#{% else %}
-#{% set patch = "0" %}
-#{% endif %}
-#{% set semver_version = major + "." + minor + "." + patch %}
 
 package:
   name: {{ name|lower }}-split
