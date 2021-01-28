@@ -1,13 +1,27 @@
 {% set name = "framel" %}
-{% set version = "8.40.1" %}
+{% set version = "v8r40p5" %}
+
+# handle Virgo version number format
+{% set semver_version = version|
+    replace('v', '', 1)|
+    replace('r', '.', 1)|
+    replace('p', '.', 1)
+ %}
+#{% set minor = version|split('r')[1]|split('p')[0] %}
+#{% if "p" in version %}
+#{% set patch = version|split('p')[1] %}
+#{% else %}
+#{% set patch = "0" %}
+#{% endif %}
+#{% set semver_version = major + "." + minor + "." + patch %}
 
 package:
   name: {{ name|lower }}-split
-  version: {{ version }}
+  version: {{ semver_version }}
 
 source:
-  url: http://software.igwn.org/sources/source/{{ name }}-{{ version }}.tar.xz
-  sha256: ea4afcdf839f8eb49edc2d3190b5aebb08871146e426b644887f7efbae30a6b9
+  url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/{{ version }}/Fr-{{ version }}.tar.gz
+  sha256: 2fd2e76e5cc5739433ba2c00726dc8eb2bd14f2e3daaa0d9e203f669d6cbbf9e
   patches:
     # mkdir on mingw only takes one argument
     - mkdir.patch  # [win]
@@ -15,7 +29,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 0
 
 requirements:
   build:
