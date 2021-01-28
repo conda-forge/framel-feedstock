@@ -73,6 +73,9 @@ outputs:
         files.
 
   - name: framel
+    build:
+      ignore_run_exports:
+        - m2w64-gcc-libs  # [win]
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
