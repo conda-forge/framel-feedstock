@@ -121,6 +121,7 @@ outputs:
     build:
       ignore_run_exports:
         - python  # [osx]
+        - m2w64-gcc-libs  # [win]
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
