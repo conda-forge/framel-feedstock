@@ -1,5 +1,5 @@
 {% set name = "framel" %}
-{% set version = "v8r40p5" %}
+{% set version = "v8r41p1" %}
 
 # handle Virgo version number format
 {% set semver_version = version|
@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/{{ version }}/Fr-{{ version }}.tar.gz
-  sha256: 2fd2e76e5cc5739433ba2c00726dc8eb2bd14f2e3daaa0d9e203f669d6cbbf9e
+  sha256: 555cb3af32b9877b60a435114f461d43be5ed9189ddb7daf6e5531fa514bda47
   patches:
     # mkdir on mingw only takes one argument
     - mkdir.patch  # [win]
