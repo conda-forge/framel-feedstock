@@ -18,11 +18,13 @@ source:
   patches:
     # mkdir on mingw only takes one argument
     - mkdir.patch  # [win]
+    # https://git.ligo.org/virgo/virgoapp/Fr/-/merge_requests/2
+    - python-metadata.patch
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -139,6 +141,8 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - python
     test:
+      requires:
+        - pip
       source_files:
         - data/test.gwf
       imports:
@@ -155,6 +159,7 @@ outputs:
           assert_array_equal(indata[0], indata2[0], 'read-write data mismatch');
           assert indata[1:] == indata2[1:], 'read-write metadata mismatch';
           "
+        - python -m pip check
     about:
       home: http://lappweb.in2p3.fr/virgo/FrameL/
       license: LGPL-2.1-or-later
