@@ -1,0 +1,33 @@
+diff --git a/Python/CMakeLists.txt b/Python/CMakeLists.txt
+index 6dc9b42..bd182ee 100644
+--- a/Python/CMakeLists.txt
++++ b/Python/CMakeLists.txt
+@@ -70,9 +70,25 @@ print(numpy.get_include(), end=';')
+     )
+ 
+     # create a egg-info file for pip
+-    set(EGG_INFO_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}-py${Python3_VERSION_XY}.egg-info")
+-    file(TOUCH ${EGG_INFO_FILE_NAME})
+-    install(FILES ${EGG_INFO_FILE_NAME} DESTINATION ${TARGET_SP_DIR})
++    set(EGG_INFO_DIR "${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}-py${Python3_VERSION_XY}.egg-info")
++    file(WRITE "PKG-INFO" "\
++Metadata-Version: 2.1
++Name: ${PROJECT_NAME}
++Version: ${PROJECT_VERSION}
++Summary: ${PROJECT_DESCRIPTION}
++Author: Benoit Mours
++Author-email: benoit.mours@iphc.cnrs.fr
++Home-Page: ${PROJECT_HOMEPAGE_URL}
++License: LGPL-3.0-or-later
++Provides: ${PROJECT_NAME}
++")
++    file(WRITE "requires.txt" "\
++numpy
++")
++    install(
++        FILES PKG-INFO requires.txt
++        DESTINATION ${TARGET_SP_DIR}/${EGG_INFO_DIR}/
++    )
+ 
+     # -- setup duplicate python module with old name --
+     install(
