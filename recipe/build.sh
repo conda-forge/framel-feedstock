@@ -1,9 +1,11 @@
 #!/bin/bash
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./gnuscripts
 
 mkdir -pv build
 pushd build
 
-cmake ${SRC_DIR} \
+cmake ${CMAKE_ARGS} ${SRC_DIR} \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DCMAKE_INSTALL_LIBDIR:PATH="lib" \
 	-DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} \
