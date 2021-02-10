@@ -5,10 +5,8 @@ cp $BUILD_PREFIX/share/gnuconfig/config.* ./gnuscripts
 mkdir -pv build
 pushd build
 
-cmake ${CMAKE_ARGS} ${SRC_DIR} \
+cmake ${SRC_DIR} ${CMAKE_ARGS} \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DCMAKE_INSTALL_LIBDIR:PATH="lib" \
-	-DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} \
 	-DENABLE_C:BOOL=yes \
 	-DENABLE_MATLAB:BOOL=no \
 	-DENABLE_PYTHON:BOOL=no \

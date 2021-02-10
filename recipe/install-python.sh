@@ -6,9 +6,8 @@ _builddir="_build${PY_VER}"
 mkdir -pv ${_builddir}
 pushd ${_builddir}
 
-cmake ${SRC_DIR} \
+cmake ${SRC_DIR} ${CMAKE_ARGS} \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} \
 	-DENABLE_C:BOOL=no \
 	-DENABLE_MATLAB:BOOL=no \
 	-DENABLE_PYTHON:BOOL=yes \
