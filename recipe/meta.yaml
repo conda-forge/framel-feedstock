@@ -126,6 +126,9 @@ outputs:
         - m2w64-gcc-libs  # [win]
     requirements:
       build:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - numpy                                  # [build_platform != target_platform]
         - {{ compiler('c') }}  # [not win]
         - {{ compiler('m2w64_c') }}  # [win]
         - cmake >=3.16.0
