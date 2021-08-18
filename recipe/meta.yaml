@@ -18,8 +18,6 @@ source:
   patches:
     # mkdir on mingw only takes one argument
     - mkdir.patch  # [win]
-    # https://git.ligo.org/virgo/virgoapp/Fr/-/merge_requests/2
-    - python-metadata.patch
 
 build:
   error_overdepending: true
