@@ -22,8 +22,13 @@ python:
 - 3.10.* *_cpython
 - 3.8.* *_cpython
 - 3.9.* *_cpython
+python_impl:
+- cpython
+- cpython
+- cpython
 target_platform:
 - osx-arm64
 zip_keys:
 - - python
   - numpy
+  - python_impl
