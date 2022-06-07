@@ -122,6 +122,7 @@ outputs:
       ignore_run_exports:
         - python  # [osx]
         - m2w64-gcc-libs  # [win]
+        - numpy
       skip: true  # [python_impl != 'cpython']
     requirements:
       build:
