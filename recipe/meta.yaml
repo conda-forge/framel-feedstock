@@ -1,5 +1,5 @@
 {% set name = "framel" %}
-{% set version = "v8r41p3" %}
+{% set version = "v8r42p1" %}
 
 # handle Virgo version number format
 {% set semver_version = version|
@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/{{ version }}/Fr-{{ version }}.tar.gz
-  sha256: 55107d6be9b989181f3d41b6db9f6e20013959955500e6c5607717cfcffbefeb
+  sha256: a287696a4880bd7621ec2fe2df83b6c6badcb6903b23ed4dc29c7bed78b15aca
   patches:
     # mkdir on mingw only takes one argument
     - mkdir.patch  # [win]
@@ -22,7 +22,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 3
+  number: 0
 
 requirements:
   build:
@@ -122,6 +122,7 @@ outputs:
       ignore_run_exports:
         - python  # [osx]
         - m2w64-gcc-libs  # [win]
+        - numpy
       skip: true  # [python_impl != 'cpython']
     requirements:
       build:
