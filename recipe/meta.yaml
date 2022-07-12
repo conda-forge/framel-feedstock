@@ -1,5 +1,5 @@
 {% set name = "framel" %}
-{% set version = "v8r42p1" %}
+{% set version = "8.42.2" %}
 
 # handle Virgo version number format
 {% set semver_version = version|
@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/{{ version }}/Fr-{{ version }}.tar.gz
-  sha256: a287696a4880bd7621ec2fe2df83b6c6badcb6903b23ed4dc29c7bed78b15aca
+  sha256: c224bc34bb70565866af564eb8ab655ac150009b554819417ec2af6e216466bd
   patches:
     # mkdir on mingw only takes one argument
     - mkdir.patch  # [win]
@@ -153,16 +153,8 @@ outputs:
         - framel
       commands:
         - >
-          python -c
-          "from pathlib import Path;
-          from numpy.testing import assert_array_equal;
-          import framel;
-          indata = framel.frgetvect1d(str(Path('data') / 'test.gwf'), 'D1');
-          framel.frputvect('test2.gwf', [{'name': 'A1:TEST', 'data': indata[0], 'start': indata[1], 'dx': indata[3], 'x_unit': indata[4], 'y_unit': indata[5]}]);
-          indata2 = framel.frgetvect1d('test2.gwf', 'A1:TEST');
-          assert_array_equal(indata[0], indata2[0], 'read-write data mismatch');
-          assert indata[1:] == indata2[1:], 'read-write metadata mismatch';
-          "
+          python -c "from pathlib import Path; from numpy.testing import assert_array_equal; import framel; indata = framel.frgetvect1d(str(Path('data') / 'test.gwf'), 'D1'); framel.frputvect('test2.gwf', [{'name': 'A1:TEST', 'data': indata[0], 'start': indata[1], 'dx': indata[3], 'x_unit': indata[4], 'y_unit': indata[5]}]);
+          indata2 = framel.frgetvect1d('test2.gwf', 'A1:TEST'); assert_array_equal(indata[0], indata2[0], 'read-write data mismatch'); assert indata[1:] == indata2[1:], 'read-write metadata mismatch'; "
         - python -m pip check
     about:
       home: http://lappweb.in2p3.fr/virgo/FrameL/
