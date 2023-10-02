@@ -17,7 +17,9 @@ source:
   sha256: c224bc34bb70565866af564eb8ab655ac150009b554819417ec2af6e216466bd
   patches:
     # mkdir on mingw only takes one argument
-    - mkdir.patch  # [win]
+    - 0001-FrIO-fix-mkdir-on-windows.patch
+    # Python 3.12 dropped distutils
+    - 0002-python-use-sysconfig-instead-of-distutils.patch
 
 build:
   error_overdepending: true
