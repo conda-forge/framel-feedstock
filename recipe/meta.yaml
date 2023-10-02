@@ -40,6 +40,7 @@ outputs:
       run_exports:
         - {{ pin_subpackage("libframel", max_pin="x") }}
       ignore_run_exports:
+        - m2w64-gcc-libs  # [win]
         - m2w64-gcc-libs-core  # [win]
     requirements:
       build:
