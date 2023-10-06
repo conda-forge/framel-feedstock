@@ -1,14 +1,15 @@
-From 20c2e65d8cf927cca611ed49b4075cbffd2b147b Mon Sep 17 00:00:00 2001
+From 9eb317998c54b0d58f8e413373e71de08e168c3f Mon Sep 17 00:00:00 2001
 From: "duncan.macleod" <duncan.macleod@ligo.org>
 Date: Mon, 2 Oct 2023 12:24:02 +0100
 Subject: [PATCH 2/2] python: use sysconfig instead of distutils
 
+(cherry picked from commit cae4b14d4c7b42df06287559523a4f4c853394bc)
 ---
  Python/CMakeLists.txt | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Python/CMakeLists.txt b/Python/CMakeLists.txt
-index 13f2b76..97c1297 100644
+index 13f2b76..34e6918 100644
 --- a/Python/CMakeLists.txt
 +++ b/Python/CMakeLists.txt
 @@ -10,8 +10,8 @@ if (ENABLE_PYTHON)
@@ -18,10 +19,10 @@ index 13f2b76..97c1297 100644
 -        "from distutils import sysconfig; import numpy;
 -print(sysconfig.get_python_lib(plat_specific=True, prefix=''), end=';');
 +        "import numpy, sysconfig;
-+print(sysconfig.get_path('platlib', vars={'platbase': '.', 'platlibdir': 'lib'}), end=';')
++print(sysconfig.get_path('platlib', vars={'base': '.', 'platbase': '.', 'platlibdir': 'lib'}), end=';')
  print(numpy.get_include(), end=';')
  "
          RESULT_VARIABLE _Python3_RESULT
 -- 
-2.39.2
+2.39.1
 
