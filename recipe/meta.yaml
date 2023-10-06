@@ -17,12 +17,14 @@ source:
   sha256: c224bc34bb70565866af564eb8ab655ac150009b554819417ec2af6e216466bd
   patches:
     # mkdir on mingw only takes one argument
-    - mkdir.patch  # [win]
+    - 0001-FrIO-fix-mkdir-on-windows.patch
+    # Python 3.12 dropped distutils
+    - 0002-python-use-sysconfig-instead-of-distutils.patch
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -39,6 +41,7 @@ outputs:
         - {{ pin_subpackage("libframel", max_pin="x") }}
       ignore_run_exports:
         - m2w64-gcc-libs  # [win]
+        - m2w64-gcc-libs-core  # [win]
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
@@ -76,6 +79,7 @@ outputs:
     build:
       ignore_run_exports:
         - m2w64-gcc-libs  # [win]
+        - m2w64-gcc-libs-core  # [win]
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
@@ -120,9 +124,10 @@ outputs:
     script: install-python.bat  # [win]
     build:
       ignore_run_exports:
-        - python  # [osx]
         - m2w64-gcc-libs  # [win]
+        - m2w64-gcc-libs-core  # [win]
         - numpy
+        - python  # [osx]
       skip: true  # [python_impl != 'cpython']
     requirements:
       build:

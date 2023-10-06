@@ -1,0 +1,28 @@
+From 0203c6a5f06a5fe31d41a16ffff991c5da9359c3 Mon Sep 17 00:00:00 2001
+From: "duncan.macleod" <duncan.macleod@ligo.org>
+Date: Mon, 2 Oct 2023 12:23:24 +0100
+Subject: [PATCH 1/2] FrIO: fix mkdir on windows
+
+---
+ src/FrIO.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/FrIO.c b/src/FrIO.c
+index 186cddc..b223163 100644
+--- a/src/FrIO.c
++++ b/src/FrIO.c
+@@ -34,7 +34,11 @@ int FrIOmkdir(char *dirName)
+     closedir(dirp);
+     return(0);}
+ 
++#if (defined(_WIN32) || defined(__WIN32__))
++  err = mkdir(dirName);
++#else
+   err = mkdir(dirName, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
++#endif
+      
+   return(err);}
+ 
+-- 
+2.39.1
+

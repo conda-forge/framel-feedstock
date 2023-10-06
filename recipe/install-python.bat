@@ -1,3 +1,5 @@
+@echo on
+
 set "_builddir=_build%PY_VER%"
 mkdir "%_builddir%"
 cd "%_builddir%"

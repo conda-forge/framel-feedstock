@@ -1,3 +1,5 @@
+@echo on
+
 mkdir _build
 cd _build
 
