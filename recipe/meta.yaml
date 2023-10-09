@@ -1,5 +1,5 @@
 {% set name = "framel" %}
-{% set version = "8.42.2" %}
+{% set version = "8.42.3" %}
 
 # handle Virgo version number format
 {% set semver_version = version|
@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/{{ version }}/Fr-{{ version }}.tar.gz
-  sha256: c224bc34bb70565866af564eb8ab655ac150009b554819417ec2af6e216466bd
+  sha256: 8c363016219b3a37a932f6b9feabc4ad7f8af74aa0a1b80b2e689c8ae088b12c
   patches:
     # mkdir on mingw only takes one argument
     - 0001-FrIO-fix-mkdir-on-windows.patch
@@ -24,7 +24,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 0
 
 requirements:
   build:
