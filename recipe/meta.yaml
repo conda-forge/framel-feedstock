@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/{{ version }}/Fr-{{ version }}.tar.gz
-  sha256: fd3cce458a7f9e502f5e684e87e951aeeda7ca8fe94353341a780d67f3e287e1
+  sha256: 5bc3f8c8e4cc4d912c9eea6e2a602559d9b8c34c3b25fbe9e3620be35d96904a
   patches:
     # mkdir on mingw only takes one argument
     - 0001-FrIO-fix-mkdir-on-windows.patch
