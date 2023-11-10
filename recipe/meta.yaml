@@ -11,8 +11,6 @@ source:
   patches:
     # mkdir on mingw only takes one argument
     - 0001-FrIO-fix-mkdir-on-windows.patch
-    # Python 3.12 dropped distutils
-    - 0002-python-use-sysconfig-instead-of-distutils.patch
 
 build:
   error_overdepending: true
