@@ -11,6 +11,11 @@ source:
   patches:
     # mkdir on mingw only takes one argument
     - 0001-FrIO-fix-mkdir-on-windows.patch
+    # backport https://git.ligo.org/virgo/virgoapp/Fr/-/merge_requests/13
+    - 0002-define-LIBFRAME_HEADERS-outside-of-ENABLE_C.patch
+    - 0003-Python-restructure-build-to-support-external-libfram.patch
+    # backport https://git.ligo.org/virgo/virgoapp/Fr/-/merge_requests/15
+    - 0004-test-restructure-pytest-suite.patch
 
 build:
   error_overdepending: true
@@ -144,15 +149,15 @@ outputs:
     test:
       requires:
         - pip
+        - pytest
       source_files:
-        - data/test.gwf
-      imports:
-        - framel
+        - test/
       commands:
-        - >
-          python -c "from pathlib import Path; from numpy.testing import assert_array_equal; import framel; indata = framel.frgetvect1d(str(Path('data') / 'test.gwf'), 'D1'); framel.frputvect('test2.gwf', [{'name': 'A1:TEST', 'data': indata[0], 'start': indata[1], 'dx': indata[3], 'x_unit': indata[4], 'y_unit': indata[5]}]);
-          indata2 = framel.frgetvect1d('test2.gwf', 'A1:TEST'); assert_array_equal(indata[0], indata2[0], 'read-write data mismatch'); assert indata[1:] == indata2[1:], 'read-write metadata mismatch'; "
+        # check metadata
         - python -m pip check
+        - python -m pip show framel
+        # run test suite
+        - python -m pytest test -ra
     about:
       home: http://lappweb.in2p3.fr/virgo/FrameL/
       license: LGPL-2.1-or-later
