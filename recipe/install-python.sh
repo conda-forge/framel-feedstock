@@ -12,7 +12,7 @@ export CFLAGS=$(echo ${CFLAGS:-} | sed -E 's|'\/usr\/local\/src\/conda\/${PKG_NA
 # configure
 cmake ${SRC_DIR} ${CMAKE_ARGS} \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DENABLE_C:BOOL=yes \
+	-DENABLE_C:BOOL=no \
 	-DENABLE_MATLAB:BOOL=no \
 	-DENABLE_PYTHON:BOOL=yes \
 	-DPython3_EXECUTABLE:FILEPATH="${PYTHON}" \
