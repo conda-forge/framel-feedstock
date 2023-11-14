@@ -1,7 +1,7 @@
 From f4d05f0f20e8f80804f8351f04d5b4514808ebc7 Mon Sep 17 00:00:00 2001
 From: "duncan.macleod" <duncan.macleod@ligo.org>
 Date: Mon, 13 Nov 2023 11:35:01 +0000
-Subject: [PATCH 2/4] define LIBFRAME_HEADERS outside of ENABLE_C
+Subject: [PATCH 2/5] define LIBFRAME_HEADERS outside of ENABLE_C
 
 so that it's always available to the Python build
 ---

@@ -1,20 +1,22 @@
-From e945b17905b152921e473f542ed190bc7c612dfd Mon Sep 17 00:00:00 2001
+From 0bc18733a4817e7e286160ec4c51882331749342 Mon Sep 17 00:00:00 2001
 From: "duncan.macleod" <duncan.macleod@ligo.org>
 Date: Mon, 13 Nov 2023 11:35:32 +0000
-Subject: [PATCH 3/4] Python: restructure build to support external
+Subject: [PATCH 3/5] Python: restructure build to support external
  libframel.so
 
 so that the C and Python libraries can be built independently
+
+(cherry picked from commit 24756621e845d5f582edf4113eef274574cf5e40)
 ---
- Python/CMakeLists.txt | 101 +++++++++++++++++++++++-------------------
+ Python/CMakeLists.txt | 105 ++++++++++++++++++++++++------------------
  src/CMakeLists.txt    |   2 -
- 2 files changed, 56 insertions(+), 47 deletions(-)
+ 2 files changed, 60 insertions(+), 47 deletions(-)
 
 diff --git a/Python/CMakeLists.txt b/Python/CMakeLists.txt
-index 9080818..45afdb1 100644
+index 9080818..b88ff78 100644
 --- a/Python/CMakeLists.txt
 +++ b/Python/CMakeLists.txt
-@@ -4,10 +4,33 @@
+@@ -4,10 +4,37 @@
  #       execute_process() call
  
  if (ENABLE_PYTHON)
@@ -29,13 +31,17 @@ index 9080818..45afdb1 100644
 +        set(LIBFRAMEL_NAME $<TARGET_LINKER_FILE_NAME:${LIBFRAMEL_TARGET}>)
 +        set(LIBFRAMEL_INCLUDEDIR ${LIBFRAMEL_LIBDIR})
 +    else()
++        message(CHECK_START "Looking for libframel")
 +        # otherwise find the installed library
 +        find_library(LIBFRAMEL "framel" REQUIRED)
++        message(CHECK_PASS "found in ${LIBFRAMEL}")
 +        set(LIBFRAMEL_TARGET ${LIBFRAMEL})
 +        get_filename_component(LIBFRAMEL_NAME ${LIBFRAMEL} NAME)
 +        get_filename_component(LIBFRAMEL_LIBDIR ${LIBFRAMEL} DIRECTORY)
 +        # and the installed headers
-+        set(LIBFRAMEL_INCLUDEDIR "${CMAKE_INSTALL_PREFIX}/include")
++        message(CHECK_START "Looking for FrameL.h")
++        find_path(LIBFRAMEL_INCLUDEDIR "FrameL.h" REQUIRED)
++        message(CHECK_PASS "found in ${LIBFRAMEL_INCLUDEDIR}")
 +    endif()
 +
 +    list(TRANSFORM LIBFRAME_HEADERS PREPEND "${LIBFRAMEL_INCLUDEDIR}/")
@@ -49,7 +55,7 @@ index 9080818..45afdb1 100644
      #Check if site-packages location is writable
      execute_process(
          COMMAND "test -w ${Python3_SITEARCH}"
-@@ -20,7 +43,7 @@ if (ENABLE_PYTHON)
+@@ -20,7 +47,7 @@ if (ENABLE_PYTHON)
          set(TARGET_INSTALL_DIR ${Python3_SITEARCH}/framel)
      else()
  
@@ -58,7 +64,7 @@ index 9080818..45afdb1 100644
          execute_process(
              COMMAND "${Python3_EXECUTABLE}" "-c"
              "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '.', 'platbase': '.', 'platlibdir': 'lib'}))"
-@@ -34,56 +57,41 @@ if (ENABLE_PYTHON)
+@@ -34,56 +61,41 @@ if (ENABLE_PYTHON)
          set(TARGET_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${Python3_INSTALL_DIR}/framel")
      endif()
  
@@ -141,7 +147,7 @@ index 9080818..45afdb1 100644
  
      # create a egg-info file for pip
      set(EGG_INFO_DIR "${PROJECT_NAME}-${${PROJECT_NAME}_VERSION}-py${Python3_VERSION_XY}.egg-info")
-@@ -99,14 +107,17 @@ License: LGPL-2.1-or-later
+@@ -99,14 +111,17 @@ License: LGPL-2.1-or-later
  Provides: ${PROJECT_NAME}
  ")
  
