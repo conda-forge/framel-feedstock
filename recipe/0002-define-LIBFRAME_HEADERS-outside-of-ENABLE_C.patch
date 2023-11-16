@@ -1,0 +1,41 @@
+From f4d05f0f20e8f80804f8351f04d5b4514808ebc7 Mon Sep 17 00:00:00 2001
+From: "duncan.macleod" <duncan.macleod@ligo.org>
+Date: Mon, 13 Nov 2023 11:35:01 +0000
+Subject: [PATCH 2/5] define LIBFRAME_HEADERS outside of ENABLE_C
+
+so that it's always available to the Python build
+---
+ src/CMakeLists.txt | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 5970f52..f9c035d 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -1,10 +1,14 @@
+ # -- C library --------------
+ 
++# define list of public headers
++set(LIBFRAME_HEADERS FrameL.h FrFilter.h FrIO.h FrVect.h)
++# and make this available to other parts of the build
++set(LIBFRAME_HEADERS ${LIBFRAME_HEADERS} PARENT_SCOPE)
++
+ if (NOT DEFINED ENABLE_C OR ENABLE_C)
+ 
+     set(LIBFRAME_VERSION_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
+ 
+-    set(LIBFRAME_HEADERS FrameL.h FrFilter.h FrIO.h FrVect.h)
+     add_library(
+         framel SHARED
+         FrFilter.c FrIO.c FrameL.c
+@@ -47,7 +51,6 @@ if (NOT DEFINED ENABLE_C OR ENABLE_C)
+         DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+     )
+ 
+-    set(LIBFRAME_HEADERS ${LIBFRAME_HEADERS} CACHE INTERNAL "LIBFRAME_HEADERS")
+     set(FRAMEL_LIBDIR ${CMAKE_CURRENT_BINARY_DIR} CACHE INTERNAL "FRAMEL_LIBDIR")
+ 
+ endif()
+-- 
+2.39.2
+
