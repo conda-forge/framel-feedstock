@@ -125,7 +125,7 @@ outputs:
         - m2w64-gcc-libs-core  # [win]
         - numpy
         - python  # [osx]
-      skip: true  # [python_impl != 'cpython']
+      skip: true  # [win or python_impl != 'cpython']
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
