@@ -11,8 +11,8 @@ cmake "%SRC_DIR%" ^
     -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
     -DENABLE_C:BOOL=yes ^
     -DENABLE_MATLAB:BOOL=no ^
-    -DENABLE_PYTHON:BOOL=no ^
-    -DENABLE_PACKAGING:BOOL=no
+    -DENABLE_PACKAGING:BOOL=no ^
+    -DENABLE_PYTHON:BOOL=no
 
 :: build
 cmake --build . --parallel "%CPU_COUNT%" --verbose
