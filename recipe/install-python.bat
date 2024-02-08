@@ -13,7 +13,8 @@ cmake "%SRC_DIR%" ^
     -DENABLE_C:BOOL=no ^
     -DENABLE_MATLAB:BOOL=no ^
     -DENABLE_PYTHON:BOOL=yes ^
-    -DPython3_EXECUTABLE:FILEPATH="%PYTHON%"
+    -DPython3_EXECUTABLE:FILEPATH="%PYTHON%"^
+    -DENABLE_PACKAGING:BOOL=no
 
 :: build
 cmake --build . --parallel "%CPU_COUNT%" --verbose

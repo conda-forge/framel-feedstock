@@ -14,6 +14,7 @@ cmake ${SRC_DIR} ${CMAKE_ARGS} \
 	-DENABLE_C:BOOL=yes \
 	-DENABLE_MATLAB:BOOL=no \
 	-DENABLE_PYTHON:BOOL=no \
+	-DENABLE_PACKAGING:BOOL=no \
 ;
 
 # build
