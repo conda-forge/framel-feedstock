@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/{{ version }}/Fr-{{ version }}.tar.gz
-  sha256: e887f90242d6abf44f50116260f52aa26331086b760045f241c5693659613922
+  url: https://software.igwn.org/lscsoft/source/Fr-{{ version }}.tar.gz
+  sha256: 6c9aa73a2edaf4d0fc4c4913d35847e345c24093e080d72c81f694c914635f04
 
 build:
   error_overdepending: true
