@@ -12,12 +12,14 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 0
+  number: 1
 
 requirements:
   build:
     - {{ compiler('c') }}  # [not win]
+    - {{ stdlib("c") }}    # [not win]
     - {{ compiler('m2w64_c') }}  # [win]
+    - {{ stdlib("m2w64_c") }}    # [win]
     - cmake
     - make  # [not win]
     - ninja  # [win]
@@ -33,7 +35,9 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
+        - {{ stdlib("c") }}    # [not win]
         - {{ compiler('m2w64_c') }}  # [win]
+        - {{ stdlib("m2w64_c") }}    # [win]
       run_constained:
         - libframe >=9999
     files:
@@ -71,7 +75,9 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
+        - {{ stdlib("c") }}    # [not win]
         - {{ compiler('m2w64_c') }}  # [win]
+        - {{ stdlib("m2w64_c") }}    # [win]
       host:
         - {{ pin_subpackage("libframel", exact=True) }}
       run:
@@ -114,13 +120,14 @@ outputs:
       ignore_run_exports:
         - m2w64-gcc-libs  # [win]
         - m2w64-gcc-libs-core  # [win]
-        - numpy
         - python  # [osx]
       skip: true  # [win or python_impl != 'cpython']
     requirements:
       build:
         - {{ compiler('c') }}  # [not win]
+        - {{ stdlib("c") }}    # [not win]
         - {{ compiler('m2w64_c') }}  # [win]
+        - {{ stdlib("m2w64_c") }}    # [win]
         - cmake >=3.16.0
         - make  # [not win]
         - ninja  # [win]
@@ -136,7 +143,6 @@ outputs:
         - python
       run:
         - {{ pin_subpackage('libframel', exact=True) }}
-        - {{ pin_compatible('numpy') }}
         - python
     test:
       requires:
