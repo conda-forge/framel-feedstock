@@ -120,7 +120,6 @@ outputs:
       ignore_run_exports:
         - m2w64-gcc-libs  # [win]
         - m2w64-gcc-libs-core  # [win]
-        - numpy
         - python  # [osx]
       skip: true  # [win or python_impl != 'cpython']
     requirements:
