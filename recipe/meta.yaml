@@ -1,13 +1,13 @@
 {% set name = "framel" %}
-{% set version = "8.47.2" %}
+{% set version = "8.47.3" %}
 
 package:
   name: {{ name|lower }}-split
   version: {{ version }}
 
 source:
-  url: https://software.igwn.org/lscsoft/source/Fr-{{ version }}.tar.gz
-  sha256: 6c9aa73a2edaf4d0fc4c4913d35847e345c24093e080d72c81f694c914635f04
+  url: https://software.igwn.org/lscsoft/source/{{ name }}-{{ version }}.tar.xz
+  sha256: db8f098a01958630c8c95a6167cafaa75827c0523899c124b1e077fdce248eb7
 
 build:
   error_overdepending: true
