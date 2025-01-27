@@ -4,7 +4,7 @@ set "_builddir=_build%PY_VER%"
 mkdir "%_builddir%"
 cd "%_builddir%"
 
-:: configure
+rem configure
 cmake "%SRC_DIR%" ^
     -G "Ninja" ^
     -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo ^
@@ -15,9 +15,12 @@ cmake "%SRC_DIR%" ^
     -DENABLE_PACKAGING:BOOL=no ^
     -DENABLE_PYTHON:BOOL=yes ^
     -DPython3_EXECUTABLE:FILEPATH="%PYTHON%"
+if errorlevel 1 exit 1
 
-:: build
+rem build
 cmake --build . --parallel "%CPU_COUNT%" --verbose
+if errorlevel 1 exit 1
 
-:: install
+rem install
 cmake --build . --parallel "%CPU_COUNT%" --verbose --target install
+if errorlevel 1 exit 1
