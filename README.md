@@ -21,6 +21,22 @@ This recipe provides packages for the `libframel` shared library,
 command line utilities, and python bindings.
 
 
+About framel
+------------
+
+Home: http://lappweb.in2p3.fr/virgo/FrameL/
+
+Package license: LGPL-2.1-or-later
+
+Summary: LIGO/Virgo Frame Library
+
+A Common Data Frame Format for Interferometric Gravitational Wave
+Detector has been developed by VIRGO and LIGO.
+The Frame Library is a software dedicated to the frame manipulation
+including file input/output.
+This package provides the FrameL command line utilities.
+
+
 About libframel
 ---------------
 
@@ -36,22 +52,6 @@ The Frame Library is a software dedicated to the frame manipulation
 including file input/output.
 This package provides the `libframel` shared library and development
 files.
-
-
-About framel
-------------
-
-Home: http://lappweb.in2p3.fr/virgo/FrameL/
-
-Package license: LGPL-2.1-or-later
-
-Summary: LIGO/Virgo Frame Library
-
-A Common Data Frame Format for Interferometric Gravitational Wave
-Detector has been developed by VIRGO and LIGO.
-The Frame Library is a software dedicated to the frame manipulation
-including file input/output.
-This package provides the FrameL command line utilities.
 
 
 About python-framel
