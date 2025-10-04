@@ -10,7 +10,8 @@ source:
   sha256: 6c9aa73a2edaf4d0fc4c4913d35847e345c24093e080d72c81f694c914635f04
 
 build:
-  error_overdepending: true
+  # This leads to false positives with the compiler on win
+  error_overdepending: true  # [not win]
   error_overlinking: true
   number: 3
 
