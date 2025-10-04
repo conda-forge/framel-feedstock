@@ -7,7 +7,6 @@ cd _build
 cmake "%SRC_DIR%" ^
     -G "Ninja" ^
     -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo ^
-    -DCMAKE_C_COMPILER=%CC% ^
     -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
     -DENABLE_C:BOOL=yes ^
     -DENABLE_MATLAB:BOOL=no ^
