@@ -1,5 +1,5 @@
 {% set name = "framel" %}
-{% set version = "8.48.5" %}
+{% set version = "8.49.0" %}
 
 package:
   name: {{ name|lower }}-split
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/{{ version }}/Fr-{{ version }}.tar.gz
-  sha256: adf1c4e191ab9784e60ef9449d76c14eee4f43941bdd426c77f3d9a2d92bebba
+  sha256: 990b4ef1e4a1ee2d21f87a50e31fd1dae56a8cd075c77ef51ac2759ed66f0e02
 
 build:
   error_overlinking: true
