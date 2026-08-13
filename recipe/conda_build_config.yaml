@@ -1,0 +1,11 @@
+# use the m2w64 compiler setup, and match the compiler version pins with the rest of conda-forge, c.f.
+# https://github.com/conda-forge/conda-forge-pinning-feedstock/blob/main/recipe/conda_build_config.yaml
+c_stdlib:               # [win]
+  - m2w64-sysroot       # [win]
+c_stdlib_version:       # [win]
+  - 12                  # [win]
+c_compiler:             # [win]
+  - gcc                 # [win]
+# stay on GCC 14 due to stricter -Wincompatible-pointer-types in v15+ that errors the build
+c_compiler_version:     # [win or linux]
+  - 14                  # [win or linux]

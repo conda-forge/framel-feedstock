@@ -11,14 +11,13 @@ source:
 
 build:
   error_overlinking: true
-  number: 0
+  number: 1
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [not win]
-    - {{ stdlib("c") }}    # [not win]
-    - {{ compiler('m2w64_c') }}  # [win]
-    - {{ stdlib("m2w64_c") }}    # [win]
+    # uses m2w64 toolchain on windows, see conda_build_config.yaml
+    - {{ stdlib("c") }}
+    - {{ compiler("c") }}
     - cmake
     - make  # [not win]
     - ninja  # [win]
@@ -33,10 +32,8 @@ outputs:
         - m2w64-gcc-libs-core  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}  # [not win]
-        - {{ stdlib("c") }}    # [not win]
-        - {{ compiler('m2w64_c') }}  # [win]
-        - {{ stdlib("m2w64_c") }}    # [win]
+        - {{ stdlib("c") }}
+        - {{ compiler("c") }}
       run_constained:
         - libframe >=9999
     files:
@@ -73,10 +70,8 @@ outputs:
         - m2w64-gcc-libs-core  # [win]
     requirements:
       build:
-        - {{ compiler('c') }}  # [not win]
-        - {{ stdlib("c") }}    # [not win]
-        - {{ compiler('m2w64_c') }}  # [win]
-        - {{ stdlib("m2w64_c") }}    # [win]
+        - {{ stdlib("c") }}
+        - {{ compiler("c") }}
       host:
         - {{ pin_subpackage("libframel", exact=True) }}
       run:
@@ -124,10 +119,8 @@ outputs:
       skip: true  # [win or python_impl != 'cpython']
     requirements:
       build:
-        - {{ compiler('c') }}  # [not win]
-        - {{ stdlib("c") }}    # [not win]
-        - {{ compiler('m2w64_c') }}  # [win]
-        - {{ stdlib("m2w64_c") }}    # [win]
+        - {{ stdlib("c") }}
+        - {{ compiler("c") }}
         - cmake >=3.16.0
         - make  # [not win]
         - ninja  # [win]
@@ -138,7 +131,7 @@ outputs:
         - ctypesgen
       host:
         - {{ pin_subpackage('libframel', exact=True) }}
-        - libpython  # [win]
+        - distutils-activate-mingw  # [win]
         - numpy
         - python
       run:
