@@ -1,0 +1,6 @@
+c_compiler_version:
+  - if: linux
+    then: "14"
+m2w64_c_compiler_version:
+  - if: win
+    then: "14"
