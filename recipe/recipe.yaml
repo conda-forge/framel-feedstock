@@ -1,0 +1,215 @@
+schema_version: 1
+
+context:
+  version: 8.49.0
+
+recipe:
+  name: framel
+  version: ${{ version }}
+
+source:
+  url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/${{ version }}/Fr-${{ version }}.tar.gz
+  sha256: 990b4ef1e4a1ee2d21f87a50e31fd1dae56a8cd075c77ef51ac2759ed66f0e02
+
+build:
+  number: 0
+
+outputs:
+  - staging:
+      name: framel-build
+    build:
+      script: build
+    requirements:
+      build:
+        - if: win
+          then:
+            - ${{ compiler("m2w64_c") }}
+            - ${{ stdlib("m2w64_c") }}
+            - ninja
+          else:
+            - ${{ compiler("c") }}
+            - ${{ stdlib("c") }}
+            - make
+        - cmake
+
+  - package:
+      name: libframel
+    inherit: framel-build
+    build:
+      files:
+        - if: win
+          then:
+            - Library/include/
+            - Library/bin/libframel.dll
+            - Library/lib/libframel.*
+            - Library/lib/pkgconfig/framel.pc
+          else:
+            - include/
+            - lib/libframel.*
+            - lib/pkgconfig/framel.pc
+    requirements:
+      run_constraints:
+        - libframe >=9999
+      run_exports:
+        - ${{ pin_subpackage("libframel", upper_bound="x") }}
+      ignore_run_exports:
+        by_name:
+          - if: win
+            then:
+              - m2w64-gcc-libs
+              - m2w64-gcc-libs-core
+    tests:
+      - package_contents:
+          include:
+            - FrameL.h
+          lib:
+            - if: unix
+              then: framel
+      - requirements:
+          run:
+            - pkg-config
+        script:
+          - pkg-config --print-errors --exact-version "${{ version }}" framel
+    about:
+      description: |
+        A Common Data Frame Format for Interferometric Gravitational Wave
+        Detector has been developed by VIRGO and LIGO.
+        The Frame Library is a software dedicated to the frame manipulation
+        including file input/output.
+        This package provides the `libframel` shared library and development
+        files.
+
+  - package:
+      name: framel
+    inherit: framel-build
+    build:
+      files:
+        - if: win
+          then:
+            - Library/bin/Fr*
+            - Library/share/doc/
+          else:
+            - bin/
+            - share/doc/
+    requirements:
+      build:
+        - if: win
+          then:
+            - ${{ compiler("m2w64_c") }}
+            - ${{ stdlib("m2w64_c") }}
+            - ninja
+          else:
+            - ${{ compiler("c") }}
+            - ${{ stdlib("c") }}
+            - make
+        - cmake
+      host:
+        - ${{ pin_subpackage("libframel", exact=True) }}
+      run_constraints:
+        - libframe >=9999
+      ignore_run_exports:
+        by_name:
+          - if: win
+            then:
+              - m2w64-gcc-libs
+              - m2w64-gcc-libs-core
+    tests:
+      - files:
+          source:
+            - data/test.gwf
+        script:
+          - if: win
+            then: "@echo on"
+          - FrChannels data/test.gwf
+          - FrCheck -i data/test.gwf
+          - FrCopy -i data/test.gwf -o copy.gwf
+          - FrDiff -i1 data/test.gwf -i2 copy.gwf -t D1 -d 1
+          - FrDump -i data/test.gwf -t D1
+          - if: not win
+            then:
+              - FrCopy -i data/test.gwf -o copy2.gwf -f 0 -l 1 -r 10
+              - FrTrend -s 1 -p trend- -d 5 -c D1 -f 925484670 -l 925484680 copy2.gwf
+    about:
+      description: |
+        A Common Data Frame Format for Interferometric Gravitational Wave
+        Detector has been developed by VIRGO and LIGO.
+        The Frame Library is a software dedicated to the frame manipulation
+        including file input/output.
+        This package provides the FrameL command line utilities.
+
+  - package:
+      name: python-framel
+    build:
+      python:
+        version_independent: true
+      script: install-python.sh
+      skip: win
+    requirements:
+      build:
+        - ${{ compiler("c") }}
+        - ${{ stdlib("c") }}
+        - cmake >=3.16.0
+        - ctypesgen
+        - make
+        # extras for cross-compiling
+        - if: build_platform != target_platform
+          then:
+            - python ${{ python_min }}.*
+            - cross-python_${{ target_platform }}
+      host:
+        - ${{ pin_subpackage('libframel', exact=True) }}
+        - python ${{ python_min }}.*
+      run:
+        - ${{ pin_subpackage('libframel', exact=True) }}
+        - numpy
+        - python >=${{ python_min }}
+      ignore_run_exports:
+        from_package:
+          - ${{ compiler("c") }}
+          - ${{ stdlib("c") }}
+        by_name:
+          # This is explicitly pinned exactly
+          - libframel
+    tests:
+      - python:
+          imports:
+            - framel
+          pip_check: true
+          python_version:
+            - ${{ python_min }}.*
+            - "*"
+      - files:
+          source:
+            - test/
+        requirements:
+          run:
+            - pytest
+        script:
+          - python -m pytest test -ra
+    about:
+      summary: Python interface for LIGO/Virgo Frame Library
+      description: |
+        A Common Data Frame Format for Interferometric Gravitational Wave
+        Detector has been developed by VIRGO and LIGO.
+        The Frame Library is a software dedicated to the frame manipulation
+        including file input/output.
+        This package provides the python bindings.
+
+about:
+  summary: LIGO/Virgo Frame Library
+  description: |
+    A Common Data Frame Format for Interferometric Gravitational Wave
+    Detector has been developed by VIRGO and LIGO.
+    The Frame Library is a software dedicated to the frame manipulation
+    including file input/output.
+    This recipe provides packages for the `libframel` shared library,
+    command line utilities, and python bindings.
+  homepage: http://lappweb.in2p3.fr/virgo/FrameL/
+  license: LGPL-2.1-or-later
+  license_file: LICENSE
+
+extra:
+  feedstock-name: framel
+  recipe-maintainers:
+    - duncanmmacleod
+    - erinelizabethseder-virgo

@@ -2,8 +2,6 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-libframel:
-- '8.41'
 m2w64_c_compiler:
 - gcc
 m2w64_c_compiler_version:
@@ -12,5 +10,7 @@ m2w64_c_stdlib:
 - m2w64-sysroot
 m2w64_c_stdlib_version:
 - '12'
+python_min:
+- '3.10'
 target_platform:
 - win-64
