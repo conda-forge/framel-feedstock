@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "8.50.0"
+  version: "8.50.3"
 
 recipe:
   name: framel
@@ -9,7 +9,7 @@ recipe:
 
 source:
   url: https://git.ligo.org/virgo/virgoapp/Fr/-/archive/${{ version }}/Fr-${{ version }}.tar.gz
-  sha256: db5603b551a5cd8c9535f5a8b91014724e06c1edaa7c8ec42e24cc1b6e7d9159
+  sha256: f9ae4d6affc43835236abf7c794ae4d6f48ecd5b61db7d5d622d235a8e1ad2bf
 
 build:
   number: 0
